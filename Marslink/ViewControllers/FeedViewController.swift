@@ -34,15 +34,31 @@ class FeedViewController: UIViewController {
     let loader = JournalEntryLoader()
     let collectionView: UICollectionView = {
 //        start with a zero-sized rect since view isnt created yet
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let view = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout())
         view.backgroundColor = .black
         return view
+    }()
+    
+//  create an initialized variable for the ListAdapter, ListAdapter controls the collection view
+    lazy var adapter: ListAdapter = {
+        return ListAdapter(
+//          handles row and section updates
+            updater: ListAdapterUpdater(),
+            viewController: self,
+//          allows you to prepare content for sections just outside of the visible frame
+            workingRangeSize: 0)
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loader.loadLatest()
         view.addSubview(collectionView)
+//        connects the collectonView to the adapter
+        adapter.collectionView = collectionView
+//        sets self as the dataSource
+        adapter.dataSource = self
     }
     
 //    this overrides viewDidLayoutSubviews(), setting the collectionView frame to match the view bounds.
@@ -51,5 +67,26 @@ class FeedViewController: UIViewController {
         collectionView.frame = view.bounds
     }
 
+    
+}
+
+// MARK: - ListAdapterDataSource
+extension FeedViewController: ListAdapterDataSource{
+//  returns an array of data objects that should show up in the collection view. i've provided loader.entries here as it contains the journal entries.
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return loader.entries
+    }
+    
+//  For each data object, listAdapter(_:sectionControllerFor:) must return a new instance of a section controller. For now you’re returning a plain ListSectionController to appease the compiler. In a moment, you’ll modify this to return a custom journal section controller.
+    func listAdapter(_ listAdapter: ListAdapter,
+                     sectionControllerFor object: Any) -> ListSectionController {
+        return JournalSectionController()
+    }
+    
+//  returns a view to display when the list is empty
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        return nil
+    }
+    
     
 }
