@@ -40,6 +40,8 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .black
         return view
     }()
+//    PathFinder() acts as a messaging system, and represents the physical Pathfinder rover the astronaut dug up on Mars
+    let pathfinder = Pathfinder()
     
 //  create an initialized variable for the ListAdapter, ListAdapter controls the collection view
     lazy var adapter: ListAdapter = {
@@ -74,13 +76,19 @@ class FeedViewController: UIViewController {
 extension FeedViewController: ListAdapterDataSource{
 //  returns an array of data objects that should show up in the collection view. i've provided loader.entries here as it contains the journal entries.
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return loader.entries
+        var items:[ListDiffable] = pathfinder.messages
+        items += loader.entries as [ListDiffable]
+        return items
     }
     
 //  For each data object, listAdapter(_:sectionControllerFor:) must return a new instance of a section controller. For now you’re returning a plain ListSectionController to appease the compiler. In a moment, you’ll modify this to return a custom journal section controller.
     func listAdapter(_ listAdapter: ListAdapter,
                      sectionControllerFor object: Any) -> ListSectionController {
-        return JournalSectionController()
+        if object is Message {
+            return MessageSectionController()
+        }else {
+            return JournalSectionController()
+        }
     }
     
 //  returns a view to display when the list is empty
