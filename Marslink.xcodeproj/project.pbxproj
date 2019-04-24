@@ -31,6 +31,10 @@
 		29E2CDF21DC7B4CF00A9E0F4 /* WeatherSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2CDD71DC7B4CF00A9E0F4 /* WeatherSummaryCell.swift */; };
 		29E2CDF51DC7B4E300A9E0F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29E2CDF31DC7B4E300A9E0F4 /* LaunchScreen.storyboard */; };
 		4E5F852CC0CB83A4C2F8AE7F /* Pods_Marslink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C715FCAFBD8A3010CBEC1EE4 /* Pods_Marslink.framework */; };
+		7E33DF33225FEF23000CA4E3 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33DF32225FEF23000CA4E3 /* FeedViewController.swift */; };
+		7E33DF35225FFF93000CA4E3 /* JournalSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33DF34225FFF93000CA4E3 /* JournalSectionController.swift */; };
+		7E33DF372264CCA2000CA4E3 /* MessageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33DF362264CCA2000CA4E3 /* MessageSectionController.swift */; };
+		7E33DF83226F6A11000CA4E3 /* WeatherSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33DF82226F6A11000CA4E3 /* WeatherSectionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +63,10 @@
 		29E2CDD61DC7B4CF00A9E0F4 /* WeatherDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDetailCell.swift; sourceTree = "<group>"; };
 		29E2CDD71DC7B4CF00A9E0F4 /* WeatherSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSummaryCell.swift; sourceTree = "<group>"; };
 		29E2CDF41DC7B4E300A9E0F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7E33DF32225FEF23000CA4E3 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		7E33DF34225FFF93000CA4E3 /* JournalSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalSectionController.swift; sourceTree = "<group>"; };
+		7E33DF362264CCA2000CA4E3 /* MessageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSectionController.swift; sourceTree = "<group>"; };
+		7E33DF82226F6A11000CA4E3 /* WeatherSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSectionController.swift; sourceTree = "<group>"; };
 		B9EFE4AB43572E52A0685AB4 /* Pods-Marslink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marslink.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Marslink/Pods-Marslink.debug.xcconfig"; sourceTree = "<group>"; };
 		C715FCAFBD8A3010CBEC1EE4 /* Pods_Marslink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Marslink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC3FA05C5618EC7BE0845CC7 /* Pods-Marslink.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marslink.release.xcconfig"; path = "Pods/Target Support Files/Pods-Marslink/Pods-Marslink.release.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +146,9 @@
 		29E2CDC41DC7B4CF00A9E0F4 /* SectionControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7E33DF34225FFF93000CA4E3 /* JournalSectionController.swift */,
+				7E33DF362264CCA2000CA4E3 /* MessageSectionController.swift */,
+				7E33DF82226F6A11000CA4E3 /* WeatherSectionController.swift */,
 			);
 			name = SectionControllers;
 			path = Marslink/SectionControllers;
@@ -160,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				29E2CDCF1DC7B4CF00A9E0F4 /* ClassicFeedViewController.swift */,
+				7E33DF32225FEF23000CA4E3 /* FeedViewController.swift */,
 			);
 			name = ViewControllers;
 			path = Marslink/ViewControllers;
@@ -240,6 +252,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -323,8 +336,12 @@
 				29E2CDF21DC7B4CF00A9E0F4 /* WeatherSummaryCell.swift in Sources */,
 				29E2CDD81DC7B4CF00A9E0F4 /* AppDelegate.swift in Sources */,
 				29E2CDDD1DC7B4CF00A9E0F4 /* SolFormatter.swift in Sources */,
+				7E33DF35225FFF93000CA4E3 /* JournalSectionController.swift in Sources */,
+				7E33DF33225FEF23000CA4E3 /* FeedViewController.swift in Sources */,
 				29E2CDED1DC7B4CF00A9E0F4 /* CustomNavigationBar.swift in Sources */,
+				7E33DF372264CCA2000CA4E3 /* MessageSectionController.swift in Sources */,
 				29E2CDDA1DC7B4CF00A9E0F4 /* DateSortable.swift in Sources */,
+				7E33DF83226F6A11000CA4E3 /* WeatherSectionController.swift in Sources */,
 				29E2CDDF1DC7B4CF00A9E0F4 /* Weather.swift in Sources */,
 				29E2CDE91DC7B4CF00A9E0F4 /* Theme.swift in Sources */,
 				29E2CDEB1DC7B4CF00A9E0F4 /* ClassicFeedViewController.swift in Sources */,

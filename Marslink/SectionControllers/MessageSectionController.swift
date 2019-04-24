@@ -1,15 +1,15 @@
-/// Copyright (c) 2018 Razeware LLC
-///
+/// Copyright (c) 2019 Razeware LLC
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,18 +27,47 @@
 /// THE SOFTWARE.
 
 import UIKit
+import IGListKit
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-  var window: UIWindow?
-  
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    window = UIWindow(frame: UIScreen.main.bounds)
-    window?.backgroundColor = .black
-    let nav = UINavigationController(navigationBarClass: CustomNavigationBar.self, toolbarClass: nil)
-    nav.pushViewController(FeedViewController(), animated: false)
-    window?.rootViewController = nav
-    window?.makeKeyAndVisible()
-    return true
-  }
+class MessageSectionController: ListSectionController {
+    
+//    recieves a Message
+    var message: Message!
+    
+    override init() {
+        super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
+    }
+
+}
+
+// MARK: - Data Provider
+extension MessageSectionController {
+//    returns a single cell
+    override func numberOfItems() -> Int {
+        return 1
+    }
+    
+    override func sizeForItem(at index: Int) -> CGSize {
+        guard
+        let context = collectionContext,
+        let message = message
+        else {
+            return .zero
+        }
+        let width = context.containerSize.width
+        return MessageCell.cellSize(width: width, text: message.text)
+    }
+    
+     override func cellForItem(at index: Int) -> UICollectionViewCell {
+        let cell = collectionContext?.dequeueReusableCell(of: MessageCell.self, for: self, at: index) as! MessageCell
+        cell.messageLabel.text = message.text
+        cell.titleLabel.text = message.user.name.uppercased()
+        return cell
+    }
+    
+    override func didUpdate(to object: Any) {
+        message = object as? Message
+    }
+    
 }
