@@ -71,8 +71,28 @@ extension WeatherSectionController {
         if let cell = cell as? WeatherSummaryCell {
             cell.setExpanded(expanded)
         } else if let cell = cell as? WeatherDetailCell {
-            cell.titleLabel.text = weather.sunrise
-            cell.detailLabel.text = weather.sunset
+            let title: String
+            let detail: String
+//     Configured four different weather detail cells, they will be populate depending on index.
+            switch index {
+            case 1:
+                title = "SUNRISE"
+                detail = weather.sunrise
+            case 2:
+                title = "SUNSET"
+                detail = weather.sunset
+            case 3:
+                title = "HIGH"
+                detail = String(weather.high)
+            case 4:
+                title = "LOW"
+                detail = String(weather.low)
+            default:
+                title = "n/a"
+                detail = "n/a"
+            }
+            cell.titleLabel.text = title
+            cell.detailLabel.text = detail
         }
         return cell
     }
