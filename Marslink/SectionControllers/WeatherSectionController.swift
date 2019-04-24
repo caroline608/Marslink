@@ -64,5 +64,26 @@ extension WeatherSectionController {
             return CGSize(width: width, height: 40)
         }
     }
+    
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        let cellClass: AnyClass = index == 0 ? WeatherSummaryCell.self : WeatherDetailCell.self
+        let cell = collectionContext!.dequeueReusableCell(of: cellClass, for: self, at: index)
+        if let cell = cell as? WeatherSummaryCell {
+            cell.setExpanded(expanded)
+        } else if let cell = cell as? WeatherDetailCell {
+            cell.titleLabel.text = weather.sunrise
+            cell.detailLabel.text = weather.sunset
+        }
+        return cell
+    }
+    
+//    The last thing I need to do is toggle the section expanded and update the cells when tapped.
+    override func didSelectItem(at index: Int) {
+//performBatch(animated:updates:completion:) batches and performs updates in the section in a single transaction. I can use this whenever the contents or number of cells changes in the section controller. Since I toggle the expansion with numberOfItems(), this will add or remove cells based on the expanded flag.
+        collectionContext?.performBatch(animated: true, updates: { ListBatchContext in
+            self.expanded.toggle()
+            ListBatchContext.reload(self)
+        }, completion: nil)
+    }
 }
 

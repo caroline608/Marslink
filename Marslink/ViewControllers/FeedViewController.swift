@@ -32,6 +32,7 @@ import IGListKit
 class FeedViewController: UIViewController {
 
     let loader = JournalEntryLoader()
+    let wxScanner = WxScanner() //Model object for weather conditions
     let collectionView: UICollectionView = {
 //        start with a zero-sized rect since view isnt created yet
         let view = UICollectionView(
@@ -61,6 +62,8 @@ class FeedViewController: UIViewController {
         adapter.collectionView = collectionView
 //        sets self as the dataSource
         adapter.dataSource = self
+        pathfinder.delegate = self
+        pathfinder.connect()
     }
     
 //    this overrides viewDidLayoutSubviews(), setting the collectionView frame to match the view bounds.
@@ -74,11 +77,22 @@ class FeedViewController: UIViewController {
 
 // MARK: - ListAdapterDataSource
 extension FeedViewController: ListAdapterDataSource{
-//  returns an array of data objects that should show up in the collection view. i've provided loader.entries here as it contains the journal entries.
+    //  returns an array of data objects that should show up in the collection view. i've provided loader.entries here as it contains the journal entries.
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var items:[ListDiffable] = pathfinder.messages
+//Adds the currentWeather to the items array
+        var items:[ListDiffable] = [wxScanner.currentWeather]
         items += loader.entries as [ListDiffable]
-        return items
+        items += pathfinder.messages as [ListDiffable]
+//        All the data conforms to the DataSortable protocol, so this sorts the data using that protocol. This ensures data appears chronologically.
+        return items.sorted { (left: Any, right: Any) -> Bool in
+            guard
+                let left = left as? DateSortable,
+                let right = right as? DateSortable
+                else {
+                    return false
+            }
+            return left.date > right.date
+        }
     }
     
 //  For each data object, listAdapter(_:sectionControllerFor:) must return a new instance of a section controller. For now you’re returning a plain ListSectionController to appease the compiler. In a moment, you’ll modify this to return a custom journal section controller.
@@ -86,6 +100,8 @@ extension FeedViewController: ListAdapterDataSource{
                      sectionControllerFor object: Any) -> ListSectionController {
         if object is Message {
             return MessageSectionController()
+        } else if object is Weather {
+            return WeatherSectionController()
         }else {
             return JournalSectionController()
         }
@@ -95,6 +111,11 @@ extension FeedViewController: ListAdapterDataSource{
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
-    
-    
+}
+
+// MARK: - PathfinderDelegate
+extension FeedViewController: PathfinderDelegate {
+    func pathfinderDidUpdateMessages(pathfinder: Pathfinder) {
+        adapter.performUpdates(animated: true)
+    }
 }
